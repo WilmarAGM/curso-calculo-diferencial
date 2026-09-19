@@ -82,8 +82,8 @@ export default function Home() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(min(280px, 100%), 1fr))",
-          gap: "1.2rem",
+          gridTemplateColumns: "repeat(auto-fill, minmax(min(310px, 100%), 1fr))",
+          gap: "1.4rem",
         }}
       >
         {weeks.map((w, i) => {
@@ -91,6 +91,11 @@ export default function Home() {
           const done = countDone(exIds);
           const total = exIds.length;
           const pct = total ? Math.round((done / total) * 100) : 0;
+          const isComplete = pct === 100;
+          const isStarted = pct > 0;
+
+          const icons = ["lim", "f'", "f(x)", "d/dx", "∫", "🔥"];
+          const cardIcon = icons[i % icons.length];
 
           return (
             <motion.div
@@ -98,24 +103,28 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.06 }}
-              whileHover={{ y: -4 }}
+              whileHover={{ y: -5 }}
             >
-              <Link to={`/semana/${w.slug}`}>
+              <Link to={`/semana/${w.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
                 <div
                   className="glass-panel"
                   style={{
-                    padding: "1.4rem",
+                    padding: "1.5rem",
                     height: "100%",
                     position: "relative",
                     overflow: "hidden",
                     cursor: "pointer",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    borderTop: w.number === 6 ? "2px solid var(--accent-3)" : "2px solid var(--accent)",
                   }}
                 >
                   <div
                     style={{
                       position: "absolute",
-                      top: -40,
-                      right: -40,
+                      top: -45,
+                      right: -45,
                       width: 140,
                       height: 140,
                       borderRadius: "50%",
@@ -123,61 +132,106 @@ export default function Home() {
                         w.number === 6
                           ? "radial-gradient(circle, rgba(255,95,182,0.28), transparent 70%)"
                           : "radial-gradient(circle, rgba(125,252,255,0.22), transparent 70%)",
+                      pointerEvents: "none",
                     }}
                   />
-                  <div
-                    className="mono"
-                    style={{ fontSize: "0.72rem", color: "var(--text-dim)", marginBottom: "0.5em" }}
-                  >
-                    {w.number === 6 ? "MÓDULO DE RETOS" : `SEMANA ${w.number}`} · {w.dateRange}
-                  </div>
-                  <h3 style={{ margin: "0 0 0.5em 0", fontSize: "1.15rem", lineHeight: 1.3 }}>{w.title}</h3>
-                  <p style={{ color: "var(--text-dim)", fontSize: "0.88rem", lineHeight: 1.5, marginBottom: "1.2em" }}>
-                    {plainSummary(w.summary)}
-                  </p>
 
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.4em" }}>
-                    <div style={{ display: "flex", gap: "0.4em", fontSize: "0.75rem", color: "var(--text-dim)" }}>
-                      <span>{w.theory.length} teoría</span>·<span>{w.examples.length} ejemplos</span>·
-                      <span>{total} ejercicios</span>
-                    </div>
-                    {w.quiz && w.quiz.length > 0 && (
-                      <span
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem" }}>
+                      <div
+                        style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: 12,
+                          background: "rgba(125, 252, 255, 0.08)",
+                          border: "1px solid rgba(125, 252, 255, 0.25)",
+                          display: "grid",
+                          placeItems: "center",
+                          color: "var(--accent)",
+                          fontWeight: 700,
+                          fontFamily: "JetBrains Mono, monospace",
+                          fontSize: "0.95rem",
+                        }}
+                      >
+                        {cardIcon}
+                      </div>
+
+                      <div
                         className="mono"
                         style={{
                           fontSize: "0.68rem",
-                          padding: "0.15em 0.55em",
+                          padding: "0.2em 0.6em",
                           borderRadius: 999,
-                          border: "1px solid",
-                          borderColor: (bestScore(w.slug) ?? 0) >= 80 ? "rgba(109,255,176,0.4)" : "var(--panel-border)",
-                          color: (bestScore(w.slug) ?? 0) >= 80 ? "var(--accent-good)" : "var(--text-dim)",
+                          background: isComplete
+                            ? "rgba(109,255,176,0.12)"
+                            : isStarted
+                            ? "rgba(255,209,102,0.12)"
+                            : "rgba(255,255,255,0.05)",
+                          color: isComplete
+                            ? "var(--accent-good)"
+                            : isStarted
+                            ? "var(--accent-warn)"
+                            : "var(--text-dim)",
+                          border: `1px solid ${
+                            isComplete
+                              ? "rgba(109,255,176,0.3)"
+                              : isStarted
+                              ? "rgba(255,209,102,0.3)"
+                              : "rgba(255,255,255,0.1)"
+                          }`,
+                          fontWeight: 600,
                         }}
                       >
-                        🧠 {bestScore(w.slug) !== null ? `${bestScore(w.slug)}%` : "sin intentar"}
-                      </span>
-                    )}
+                        {isComplete ? "✓ Completado" : isStarted ? "⏳ En Progreso" : `${total} ejercicios`}
+                      </div>
+                    </div>
+
+                    <div
+                      className="mono"
+                      style={{ fontSize: "0.72rem", color: "var(--accent)", letterSpacing: "0.06em", marginBottom: "0.4em" }}
+                    >
+                      {w.number === 6 ? "MÓDULO DE RETOS" : `SEMANA ${w.number}`} · {w.dateRange}
+                    </div>
+
+                    <h3 style={{ margin: "0 0 0.5em 0", fontSize: "1.18rem", lineHeight: 1.3, fontWeight: 700 }}>
+                      {w.title}
+                    </h3>
+
+                    <p style={{ color: "var(--text-dim)", fontSize: "0.88rem", lineHeight: 1.5, marginBottom: "1.2em" }}>
+                      {plainSummary(w.summary)}
+                    </p>
                   </div>
 
-                  <div
-                    style={{
-                      marginTop: "0.8em",
-                      height: 6,
-                      borderRadius: 4,
-                      background: "rgba(255,255,255,0.06)",
-                      overflow: "hidden",
-                    }}
-                  >
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5em" }}>
+                      <span style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text)" }}>
+                        {pct}% completado
+                      </span>
+                      <span style={{ fontSize: "0.75rem", color: "var(--text-dim)" }}>
+                        {w.theory.length} teoría · {w.examples.length} ej.
+                        {bestScore(w.slug) !== null && ` · 🧠 ${bestScore(w.slug)}%`}
+                      </span>
+                    </div>
+
                     <div
                       style={{
-                        height: "100%",
-                        width: `${pct}%`,
-                        background: "linear-gradient(90deg, var(--accent), var(--accent-2))",
-                        transition: "width 0.4s ease",
+                        height: 6,
+                        borderRadius: 4,
+                        background: "rgba(255,255,255,0.06)",
+                        overflow: "hidden",
                       }}
-                    />
-                  </div>
-                  <div style={{ fontSize: "0.72rem", color: "var(--text-dim)", marginTop: "0.4em" }}>
-                    {done}/{total} ejercicios resueltos
+                    >
+                      <div
+                        style={{
+                          height: "100%",
+                          width: `${pct}%`,
+                          background: w.number === 6
+                            ? "linear-gradient(90deg, var(--accent-3), var(--accent-2))"
+                            : "linear-gradient(90deg, var(--accent), var(--accent-good))",
+                          transition: "width 0.4s ease",
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               </Link>

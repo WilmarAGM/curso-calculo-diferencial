@@ -60,30 +60,53 @@ export default function NavBar() {
         </div>
       </Link>
 
-      <nav style={{ display: "flex", gap: "0.4em", alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end" }}>
+      <nav style={{ display: "flex", gap: "0.5em", alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end" }}>
         <XPWidget />
+
+        <div
+          title="Docente: Wilmar Alberto González Medina"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.4rem",
+            padding: "0.25rem 0.6rem 0.25rem 0.3rem",
+            borderRadius: "999px",
+            background: "rgba(255, 255, 255, 0.05)",
+            border: "1px solid rgba(125, 252, 255, 0.25)",
+          }}
+        >
+          <img
+            src="/wilmar-profile.png"
+            alt="Wilmar Alberto González Medina"
+            style={{ width: 26, height: 26, borderRadius: "50%", objectFit: "cover" }}
+          />
+          <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--text)" }}>
+            Prof. Wilmar
+          </span>
+        </div>
+
         {location.pathname !== "/" && (
-          <Link to="/" className="btn" style={{ padding: "0.5em 1em", fontSize: "0.85rem" }}>
-            ← Semanas
+          <Link to="/" className="btn" style={{ padding: "0.45em 0.9em", fontSize: "0.82rem" }}>
+            ← Inicio
           </Link>
         )}
         {location.pathname !== "/temario" && (
-          <Link to="/temario" className="btn" style={{ padding: "0.5em 1em", fontSize: "0.85rem" }}>
+          <Link to="/temario" className="btn" style={{ padding: "0.45em 0.9em", fontSize: "0.82rem" }}>
             🗺 Temario
           </Link>
         )}
         {location.pathname !== "/transformaciones" && (
-          <Link to="/transformaciones" className="btn" style={{ padding: "0.5em 1em", fontSize: "0.85rem" }}>
+          <Link to="/transformaciones" className="btn" style={{ padding: "0.45em 0.9em", fontSize: "0.82rem" }}>
             🎨 Transformaciones
           </Link>
         )}
         {location.pathname !== "/galeria" && (
-          <Link to="/galeria" className="btn" style={{ padding: "0.5em 1em", fontSize: "0.85rem" }}>
+          <Link to="/galeria" className="btn" style={{ padding: "0.45em 0.9em", fontSize: "0.82rem" }}>
             📊 Galería
           </Link>
         )}
         {canInstall && (
-          <button className="btn btn-primary" style={{ fontSize: "0.85rem" }} onClick={promptInstall}>
+          <button className="btn btn-primary" style={{ fontSize: "0.82rem", padding: "0.45em 0.9em" }} onClick={promptInstall}>
             ⬇ Instalar app
           </button>
         )}

@@ -9,11 +9,11 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'icons/*.png'],
+      includeAssets: ['course-logo.png', 'unal-logo.svg', 'icons/*.png'],
       manifest: {
-        name: 'Cálculo Diferencial — Primer Parcial',
-        short_name: 'CálculoD',
-        description: 'Notas de clase interactivas, ejemplos resueltos y ejercicios para el Primer Parcial de Cálculo Diferencial (UNAL).',
+        name: 'CD Unal',
+        short_name: 'CD Unal',
+        description: 'Notas de clase interactivas, ejemplos resueltos y ejercicios para el Primer Parcial de Cálculo Diferencial (UNAL Medellín).',
         theme_color: '#0a0e1a',
         background_color: '#05070d',
         display: 'standalone',

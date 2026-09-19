@@ -1,0 +1,210 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+:root {
+  --bg: #05070d;
+  --bg-elev: #0b0f1c;
+  --panel: rgba(18, 22, 38, 0.72);
+  --panel-border: rgba(120, 150, 255, 0.14);
+  --text: #e8ecff;
+  --text-dim: #9aa3c7;
+  --accent: #7dfcff;
+  --accent-2: #b98bff;
+  --accent-3: #ff5fb6;
+  --accent-warn: #ffd166;
+  --accent-good: #6dffb0;
+  --glow: 0 0 24px rgba(125, 252, 255, 0.25);
+  --radius: 18px;
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#root {
+  position: relative;
+  isolation: isolate;
+}
+
+.bg-aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(60% 50% at 15% 10%, rgba(125, 252, 255, 0.16), transparent 60%),
+    radial-gradient(50% 40% at 85% 15%, rgba(185, 139, 255, 0.16), transparent 60%),
+    radial-gradient(60% 60% at 50% 100%, rgba(255, 95, 182, 0.12), transparent 60%),
+    var(--bg);
+  overflow: hidden;
+}
+
+.bg-aurora::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background-image: linear-gradient(rgba(125, 252, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125, 252, 255, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 40%, transparent 90%);
+  animation: driftGrid 60s linear infinite;
+}
+
+@keyframes driftGrid {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(48px, 48px);
+  }
+}
+
+code,
+.mono {
+  font-family: "JetBrains Mono", monospace;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(125, 252, 255, 0.3);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(125, 252, 255, 0.25);
+  border-radius: 8px;
+}
+
+.katex {
+  font-size: 1.02em;
+}
+
+/* Fórmulas de bloque largas: scroll propio en vez de salirse del recuadro */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  padding: 0.15em 0;
+}
+
+.glass-panel {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.glass-panel > *,
+.glass-panel div {
+  min-width: 0;
+}
+
+.neon-text {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2) 60%, var(--accent-3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 18px rgba(125, 252, 255, 0.25));
+}
+
+.glass-panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.glass-panel:hover {
+  border-color: rgba(125, 252, 255, 0.35);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55), 0 0 20px rgba(125, 252, 255, 0.12);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.65em 1.2em;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  border-color: var(--accent);
+  box-shadow: var(--glow);
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  color: #05070d;
+  border: none;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 0 30px rgba(125, 252, 255, 0.4);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.25em 0.75em;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+
+.pill-C {
+  color: var(--accent-good);
+  border-color: rgba(109, 255, 176, 0.4);
+  background: rgba(109, 255, 176, 0.08);
+}
+.pill-A {
+  color: var(--accent-warn);
+  border-color: rgba(255, 209, 102, 0.4);
+  background: rgba(255, 209, 102, 0.08);
+}
+.pill-I {
+  color: var(--accent-3);
+  border-color: rgba(255, 95, 182, 0.4);
+  background: rgba(255, 95, 182, 0.08);
+}

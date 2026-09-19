@@ -85,6 +85,36 @@ export default function NavBar() {
           </span>
         </div>
 
+        {/* Selector Desplegable de Semanas Rápido */}
+        <select
+          value={location.pathname.startsWith("/semana/") ? location.pathname.split("/")[2] : ""}
+          onChange={(e) => {
+            if (e.target.value) {
+              window.location.hash = `#/semana/${e.target.value}`;
+            }
+          }}
+          className="btn"
+          style={{
+            padding: "0.45em 0.8em",
+            fontSize: "0.82rem",
+            background: "rgba(10, 16, 30, 0.8)",
+            color: "var(--text)",
+            border: "1px solid rgba(125, 252, 255, 0.3)",
+            outline: "none",
+            cursor: "pointer",
+          }}
+        >
+          <option value="" disabled>
+            📚 Ir a Semana...
+          </option>
+          <option value="semana-1">Semana 1: Funciones</option>
+          <option value="semana-2">Semana 2: Límites</option>
+          <option value="semana-3">Semana 3: Continuidad</option>
+          <option value="semana-4">Semana 4: Derivadas</option>
+          <option value="semana-5">Semana 5: Reglas</option>
+          <option value="retos">🔥 Módulo de Retos</option>
+        </select>
+
         {location.pathname !== "/" && (
           <Link to="/" className="btn" style={{ padding: "0.45em 0.9em", fontSize: "0.82rem" }}>
             ← Inicio
